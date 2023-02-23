@@ -1,9 +1,10 @@
-package com.pasquale.BookLibrary.models;
+package com.pasquale.booklibrary.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Table(name = "Book")
@@ -13,25 +14,31 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name")
-    @Size(min=2, max=100, message = "Name should be between 2 and 100 characters")
-    @NotEmpty(message = "Name should be not empty")
-    private String name;
+    @Column(name = "title")
+    @Size(min=2, max=100, message = "Title should be between 2 and 100 characters")
+    @NotEmpty(message = "Title should be not empty")
+    private String title;
     @Column(name = "author")
     @NotEmpty(message = "Author should be not empty")
     private String author;
     @Column(name = "year")
-    @Min(value = 1, message = "year should be greater than 0")
+    @Min(value = 1, message = "Year should be greater than 0")
     private int year;
 
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person owner;
+    @Column(name = "taken_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date takenAt;
+
+    @Transient
+    private boolean expired;
     public Book(){}
 
-    public Book(int id, String name, String author, int year) {
+    public Book(int id, String title, String author, int year) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.author = author;
         this.year = year;
     }
@@ -43,12 +50,12 @@ public class Book {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String name) {
+        this.title = name;
     }
 
     public String getAuthor() {
@@ -71,5 +78,21 @@ public class Book {
     }
     public void setOwner(Person owner) {
         this.owner = owner;
+    }
+
+    public Date getTakenAt() {
+        return takenAt;
+    }
+
+    public void setTakenAt(Date takenAt) {
+        this.takenAt = takenAt;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
     }
 }

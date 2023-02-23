@@ -1,8 +1,8 @@
-package com.pasquale.BookLibrary.controllers;
+package com.pasquale.booklibrary.controllers;
 
-import com.pasquale.BookLibrary.models.Person;
-import com.pasquale.BookLibrary.services.PeopleService;
-import com.pasquale.BookLibrary.util.PersonValidator;
+import com.pasquale.booklibrary.models.Person;
+import com.pasquale.booklibrary.services.PeopleService;
+import com.pasquale.booklibrary.util.PersonValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,5 +62,14 @@ public class PeopleController {
     public String delete(@PathVariable("id") int id){
         peopleService.delete(id);
         return "redirect:/people";
+    }
+    @GetMapping("/search")
+    public String searchPage(){
+        return "people/search";
+    }
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query){
+        model.addAttribute("people", peopleService.searchByName(query));
+        return "people/search";
     }
 }

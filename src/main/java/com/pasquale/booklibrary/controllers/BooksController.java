@@ -1,9 +1,9 @@
-package com.pasquale.BookLibrary.controllers;
+package com.pasquale.booklibrary.controllers;
 
-import com.pasquale.BookLibrary.models.Book;
-import com.pasquale.BookLibrary.models.Person;
-import com.pasquale.BookLibrary.services.BooksService;
-import com.pasquale.BookLibrary.services.PeopleService;
+import com.pasquale.booklibrary.models.Book;
+import com.pasquale.booklibrary.models.Person;
+import com.pasquale.booklibrary.services.BooksService;
+import com.pasquale.booklibrary.services.PeopleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -75,5 +75,14 @@ public class BooksController {
     public String assign(@PathVariable("id") int id, @ModelAttribute("person") Person person){
         booksService.assign(id, person);
         return "redirect:/books/" + id;
+    }
+    @GetMapping("/search")
+    public String searchPage(){
+        return "books/search";
+    }
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query){
+        model.addAttribute("books", booksService.searchByTitle(query));
+        return "books/search";
     }
 }

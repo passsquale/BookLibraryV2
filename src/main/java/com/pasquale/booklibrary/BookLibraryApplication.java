@@ -1,4 +1,4 @@
-package com.pasquale.BookLibrary;
+package com.pasquale.booklibrary;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

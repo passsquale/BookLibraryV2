@@ -5,7 +5,7 @@
     <title>Book</title>
 </head>
 <body>
-<p th:text="${book.getName() + ', ' + book.getAuthor() + ', ' +  book.getYear()}"></p>
+<p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' +  book.getYear()}"></p>
 <div th:if="${bookOwner == null}">
     <p>This book is free</p>
     <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">

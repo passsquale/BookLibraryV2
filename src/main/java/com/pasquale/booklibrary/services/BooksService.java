@@ -1,11 +1,13 @@
-package com.pasquale.BookLibrary.services;
+package com.pasquale.booklibrary.services;
 
-import com.pasquale.BookLibrary.models.Book;
-import com.pasquale.BookLibrary.models.Person;
-import com.pasquale.BookLibrary.repositories.BooksRepository;
+import com.pasquale.booklibrary.models.Book;
+import com.pasquale.booklibrary.models.Person;
+import com.pasquale.booklibrary.repositories.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +20,7 @@ public class BooksService {
         this.booksRepository = booksRepository;
     }
     public List<Book> findAll(){
-        return booksRepository.findAll();
+        return booksRepository.findAll(Sort.by("title"));
     }
     public Book findOne(int id){
         Optional<Book> foundBook = booksRepository.findById(id);
@@ -33,7 +35,9 @@ public class BooksService {
     }
     @Transactional
     public void update(int id, Book updatedBook){
+        Book bookToBeUpdated = booksRepository.findById(id).get();
         updatedBook.setId(id);
+        updatedBook.setOwner(bookToBeUpdated.getOwner());
         booksRepository.save(updatedBook);
     }
     @Transactional
@@ -44,10 +48,16 @@ public class BooksService {
     public void release(int id){
         Optional<Book> book = booksRepository.findById(id);
         book.get().setOwner(null);
+        book.get().setExpired(false);
+        book.get().setTakenAt(null);
     }
     @Transactional
     public void assign(int id, Person person){
         Optional<Book> book = booksRepository.findById(id);
+        book.get().setTakenAt(new Date());
         person.addBook(book.get());
+    }
+    public List<Book> searchByTitle(String query){
+        return booksRepository.findBooksByTitleStartingWithIgnoreCase(query);
     }
 }

@@ -1,4 +1,4 @@
-package com.pasquale.BookLibrary;
+package com.pasquale.booklibrary;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

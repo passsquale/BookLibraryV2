@@ -5,11 +5,14 @@
     <title>People</title>
 </head>
 <body>
+<a href="/people/new">Add person</a>
+<br/>
+<a href="/people/search">Search person</a>
+<hr/>
+
 <div th:each="person : ${people}">
     <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName() + ', ' + person.getYearOfBirth()}"></a>
 </div>
-<br/>
-<hr/>
-<a href="/people/new">Add person</a>
+
 </body>
 </html>

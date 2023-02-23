@@ -1,9 +1,8 @@
-package com.pasquale.BookLibrary.util;
+package com.pasquale.booklibrary.util;
 
 
-import com.pasquale.BookLibrary.dao.PersonDAO;
-import com.pasquale.BookLibrary.models.Person;
-import com.pasquale.BookLibrary.services.PeopleService;
+import com.pasquale.booklibrary.models.Person;
+import com.pasquale.booklibrary.services.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

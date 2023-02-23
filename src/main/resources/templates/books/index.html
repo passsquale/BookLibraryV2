@@ -5,11 +5,13 @@
     <title>Books</title>
 </head>
 <body>
-<div th:each="book : ${books}">
-  <a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getName() + ', ' + book.getAuthor()+', ' + book.getYear()}"></a>
-</div>
-<br/>
-<hr/>
 <a href="/books/new">Create book</a>
+<br>
+<a href="/books/search">Search book</a>
+<hr/>
+<div th:each="book : ${books}">
+  <a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle() + ', ' + book.getAuthor()+', ' + book.getYear()}"></a>
+</div>
+
 </body>
 </html>

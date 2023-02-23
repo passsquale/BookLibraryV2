@@ -1,11 +1,14 @@
-package com.pasquale.BookLibrary.services;
+package com.pasquale.booklibrary.services;
 
-import com.pasquale.BookLibrary.models.Book;
-import com.pasquale.BookLibrary.models.Person;
-import com.pasquale.BookLibrary.repositories.PeopleRepository;
+import com.pasquale.booklibrary.models.Book;
+import com.pasquale.booklibrary.models.Person;
+import com.pasquale.booklibrary.repositories.PeopleRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +22,7 @@ public class PeopleService {
         this.peopleRepository = peopleRepository;
     }
     public List<Person> findAll(){
-        return peopleRepository.findAll();
+        return peopleRepository.findAll(Sort.by("name"));
     }
 
     public Person findOne(int id){
@@ -31,6 +34,15 @@ public class PeopleService {
     }
     public List<Book> findBooks(int id){
         Optional<Person> person = peopleRepository.findById(id);
+        if(person.isPresent()){
+            Hibernate.initialize(person.get().getBooks());
+            person.get().getBooks().forEach(book -> {
+                long diff = Math.abs(book.getTakenAt().getTime() - new Date().getTime());
+                if(diff > 864000000){ // 10 days
+                    book.setExpired(true);
+                }
+            });
+        }
         return person.get().getBooks();
     }
 
@@ -46,5 +58,9 @@ public class PeopleService {
     @Transactional
     public void delete(int id){
         peopleRepository.deleteById(id);
+    }
+
+    public List<Person> searchByName(String query){
+        return peopleRepository.findPersonByNameStartingWithIgnoreCase(query);
     }
 }

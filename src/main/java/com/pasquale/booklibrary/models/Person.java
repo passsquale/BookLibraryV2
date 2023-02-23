@@ -1,4 +1,4 @@
-package com.pasquale.BookLibrary.models;
+package com.pasquale.booklibrary.models;
 
 
 import jakarta.persistence.*;
