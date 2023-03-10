@@ -4,11 +4,13 @@ import com.pasquale.booklibrary.models.Person;
 import com.pasquale.booklibrary.services.PeopleService;
 import com.pasquale.booklibrary.util.PersonValidator;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 
 
 @Controller
@@ -46,12 +48,12 @@ public class PeopleController {
         return "redirect:/people";
     }
     @GetMapping("/{id}/edit")
-    public String updatePerson(Model model, @PathVariable("id") int id){
+    public String edit(Model model, @PathVariable("id") int id){
         model.addAttribute("person", peopleService.findOne(id));
         return "people/edit";
     }
     @PatchMapping("/{id}")
-    public String edit(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult,@PathVariable("id") int id){
+    public String update(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult, @PathVariable("id") int id){
         if(bindingResult.hasErrors()){
             return "people/edit";
         }
@@ -72,4 +74,6 @@ public class PeopleController {
         model.addAttribute("people", peopleService.searchByName(query));
         return "people/search";
     }
+
+
 }

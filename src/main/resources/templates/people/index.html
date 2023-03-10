@@ -10,6 +10,7 @@
 <a href="/people/search">Search person</a>
 <hr/>
 
+
 <div th:each="person : ${people}">
     <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName() + ', ' + person.getYearOfBirth()}"></a>
 </div>

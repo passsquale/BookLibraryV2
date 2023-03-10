@@ -5,7 +5,9 @@
     <title>Person</title>
 </head>
 <body>
-<p th:text="${person.getName() + ', ' + person.getYearOfBirth()}"></p>
+<p th:text="${'Name: ' + person.getName()}"></p>
+<p th:text="${'Email: ' + person.getEmail()}"></p>
+<p th:text="${'Year of birth: ' + person.getYearOfBirth()}"></p>
 
 <div th:if="${books.isEmpty()}">
     <p>Person hasn't taken the books yet</p>

@@ -25,6 +25,7 @@ public class Book {
     @Min(value = 1, message = "Year should be greater than 0")
     private int year;
 
+
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person owner;

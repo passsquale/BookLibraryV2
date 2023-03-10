@@ -47,13 +47,13 @@ public class BooksController {
         return "redirect:/books";
     }
     @GetMapping("/{id}/edit")
-    public String updateBook(@PathVariable("id") int id, Model model){
+    public String edit(@PathVariable("id") int id, Model model){
         model.addAttribute("book", booksService.findOne(id));
         return "books/edit";
     }
     @PatchMapping("/{id}")
-    public String edit(@PathVariable("id") int id, @ModelAttribute("book") @Valid Book book,
-                       BindingResult bindingResult){
+    public String update(@PathVariable("id") int id, @ModelAttribute("book") @Valid Book book,
+                         BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "books/edit";
         }
